@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlanPin Pitch Deck</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'Karrik';
+    src: url('assets/fonts/Karrik-Regular.woff2') format('woff2'),
+         url('assets/fonts/Karrik-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Karrik';
+    src: url('assets/fonts/Karrik-Italic.woff2') format('woff2'),
+         url('assets/fonts/Karrik-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* === BASE === */
+html, body { height: 100%; overflow-x: hidden; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+.slide {
+    width: 100vw; height: 100vh; height: 100dvh;
+    overflow: hidden; scroll-snap-align: start;
+    display: flex; flex-direction: column; position: relative;
+}
+.slide-content {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    max-height: 100%; overflow: hidden;
+    padding: var(--slide-pad);
+    padding-top: clamp(2rem, 5vh, 5rem);
+}
+
+/* === THEME === */
+:root {
+    --amber: #FFC752;
+    --green: #8CDD88;
+    --purple: #B5A3F3;
+    --light: #FAFAFA;
+    --dark: #0D0D0D;
+    --font-h: 'Karrik', Georgia, serif;
+    --font-b: 'Poppins', -apple-system, sans-serif;
+    --title: clamp(1.8rem, 4.5vw, 3.8rem);
+    --h2: clamp(1.3rem, 3vw, 2.4rem);
+    --h3: clamp(1rem, 1.8vw, 1.4rem);
+    --body: clamp(0.75rem, 1.3vw, 1rem);
+    --sm: clamp(0.65rem, 1vw, 0.85rem);
+    --xs: clamp(0.6rem, 0.8vw, 0.72rem);
+    --slide-pad: clamp(2rem, 6vw, 7rem);
+}
+body { font-family: var(--font-b); color: var(--dark); background: var(--dark); -webkit-font-smoothing: antialiased; }
+
+.slide--dark { background: var(--dark); color: var(--light); }
+.slide--light { background: var(--light); color: var(--dark); }
+
+h1, h2, h3 { font-family: var(--font-h); font-weight: normal; line-height: 1.15; margin: 0; text-align: left; }
+h1 { font-size: var(--title); }
+h2 { font-size: var(--h2); }
+h3 { font-size: var(--h3); }
+p, li { font-family: var(--font-b); font-size: var(--body); line-height: 1.6; margin: 0; text-align: left; }
+
+.label { font-family: var(--font-b); font-size: var(--xs); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.slide--dark .label { color: var(--amber); }
+.slide--light .label { color: var(--dark); opacity: 0.5; }
+
+.muted { opacity: 0.6; }
+.c-a { color: var(--amber); }
+.c-g { color: var(--green); }
+.c-p { color: var(--purple); }
+
+.flex-col { display: flex; flex-direction: column; }
+.gap-xs { gap: clamp(0.2rem, 0.4vw, 0.3rem); }
+.gap-sm { gap: clamp(0.3rem, 0.6vw, 0.5rem); }
+.gap-md { gap: clamp(0.5rem, 1.2vw, 1rem); }
+.gap-lg { gap: clamp(1rem, 2.5vw, 2.5rem); }
+.gap-xl { gap: clamp(1.5rem, 3vw, 3rem); }
+
+.rule { width: 100%; height: 1px; margin: clamp(0.5rem, 1vh, 1rem) 0; }
+.slide--dark .rule { background: rgba(255,255,255,0.12); }
+.slide--light .rule { background: rgba(13,13,13,0.12); }
+
+/* === COVER === */
+.cover-layout {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 6rem);
+    flex: 1;
+}
+.cover-logo-wrap {
+    flex-shrink: 0;
+}
+.cover-logo-wrap img {
+    height: clamp(180px, 35vh, 400px);
+    width: auto;
+    object-fit: contain;
+}
+.cover-text {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1.5vh, 1.5rem);
+}
+.cover-subtitle {
+    font-size: var(--body);
+    opacity: 0.5;
+}
+
+/* === PROBLEM === */
+.problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1rem, 2.5vw, 3rem);
+}
+.problem-item { padding-top: clamp(0.5rem, 1vw, 0.8rem); border-top: 2px solid var(--dark); }
+.slide--dark .problem-item { border-top-color: var(--amber); }
+.problem-item h3 { font-family: var(--font-h); font-weight: bold; margin-bottom: clamp(0.15rem, 0.3vw, 0.3rem); }
+.problem-item p { font-size: var(--sm); opacity: 0.7; }
+
+/* === INSIGHT === */
+.insight-list { display: flex; flex-direction: column; gap: clamp(0.4rem, 0.8vh, 0.7rem); }
+.insight-item { font-size: var(--body); padding-left: clamp(0.8rem, 1.5vw, 1.5rem); border-left: 3px solid var(--amber); opacity: 0.8; }
+.pullquote {
+    font-family: var(--font-h); font-size: clamp(0.95rem, 1.8vw, 1.4rem);
+    font-style: italic; line-height: 1.4; max-width: 36em;
+    margin-top: clamp(0.5rem, 1.5vh, 1.5rem);
+}
+.slide--dark .pullquote { color: var(--amber); }
+.slide--light .pullquote { color: var(--dark); }
+
+/* === SOLUTION === */
+.solution-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 6rem);
+}
+.pillar-num { font-family: var(--font-h); font-size: clamp(2.5rem, 5vw, 5rem); line-height: 1; margin-bottom: clamp(0.2rem, 0.4vw, 0.4rem); }
+.pillar h3 { margin-bottom: clamp(0.2rem, 0.4vw, 0.3rem); }
+.pillar p { font-size: var(--sm); opacity: 0.7; }
+.principle {
+    font-family: var(--font-h); font-size: clamp(0.9rem, 1.5vw, 1.2rem); font-weight: bold;
+    margin-top: clamp(0.8rem, 1.5vh, 1.5rem); padding-top: clamp(0.5rem, 1vh, 1rem);
+    border-top: 1px solid rgba(13,13,13,0.12);
+}
+
+/* === HOW IT WORKS === */
+.how-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 5rem);
+    align-items: center;
+}
+.steps { display: flex; flex-direction: column; gap: clamp(0.8rem, 1.5vh, 1.5rem); }
+.step { border-top: 2px solid var(--green); padding-top: clamp(0.4rem, 0.8vw, 0.6rem); }
+.step-label { font-family: var(--font-b); font-size: var(--xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: clamp(0.15rem, 0.3vw, 0.3rem); }
+.step h3 { margin-bottom: clamp(0.1rem, 0.2vw, 0.2rem); }
+.step p { font-size: var(--sm); opacity: 0.7; }
+.how-screenshot-wrap {
+    position: relative;
+    width: 100%;
+    min-height: min(60vh, 450px);
+    max-height: min(75vh, 550px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.how-screenshot {
+    width: 100%;
+    max-height: min(75vh, 550px);
+    object-fit: contain;
+    border-radius: clamp(4px, 0.5vw, 8px);
+}
+.how-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.how-img.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+.how-video {
+    border-radius: clamp(4px, 0.5vw, 8px);
+}
+.how-step {
+    cursor: pointer;
+    opacity: 0.35;
+    transition: opacity 0.3s ease, border-top-color 0.3s ease;
+}
+.how-step.is-active {
+    opacity: 1;
+}
+.how-step.is-active .step-label {
+    color: var(--amber);
+}
+
+/* === iPHONE MOCKUP === */
+.iphone-mockup-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-height: min(75vh, 550px);
+}
+.iphone-frame {
+    width: clamp(160px, 22vw, 260px);
+    aspect-ratio: 393 / 852;
+    background: #1a1a1a;
+    border-radius: clamp(28px, 3.5vw, 55px);
+    padding: clamp(5px, 0.6vw, 10px);
+    box-shadow:
+        0 0 0 1px #333,
+        0 12px 40px rgba(0,0,0,0.5),
+        inset 0 0 0 1px #2a2a2a;
+    position: relative;
+    flex-shrink: 0;
+}
+.iphone-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: clamp(22px, 2.8vw, 44px);
+    overflow: hidden;
+    position: relative;
+}
+.iphone-notch {
+    position: absolute;
+    top: clamp(5px, 0.6vw, 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(60px, 8vw, 126px);
+    height: clamp(16px, 2.2vw, 34px);
+    background: #1a1a1a;
+    border-radius: clamp(10px, 1.2vw, 20px);
+    z-index: 2;
+}
+.iphone-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.iphone-home-bar {
+    position: absolute;
+    bottom: clamp(3px, 0.4vw, 7px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(60px, 8vw, 134px);
+    height: clamp(2px, 0.3vw, 5px);
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+    z-index: 2;
+}
+
+/* === PARTNER LOGOS (Book step) === */
+.partner-logos-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 2vh, 2rem);
+    width: 100%;
+    max-height: min(75vh, 550px);
+}
+.partner-logos-label {
+    font-family: var(--font-b);
+    font-size: var(--xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+}
+.partner-logos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: clamp(1.2rem, 2.5vw, 2.5rem) clamp(2rem, 4vw, 4rem);
+    align-items: center;
+    justify-items: center;
+    padding: clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vw, 4rem);
+    background: rgba(255,255,255,0.06);
+    border-radius: clamp(8px, 1vw, 16px);
+}
+.partner-logos-grid img {
+    height: clamp(24px, 3.5vh, 40px);
+    max-width: clamp(100px, 14vw, 180px);
+    width: auto;
+    object-fit: contain;
+}
+.partner-logos-grid img.logo-invert {
+    filter: brightness(0) invert(1);
+}
+
+/* === MARKET === */
+.persona-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(1rem, 2vw, 2.5rem); }
+.persona-card { padding-top: clamp(0.4rem, 0.8vw, 0.6rem); border-top: 2px solid var(--dark); }
+.persona-card h3 { font-family: var(--font-h); font-weight: bold; font-size: var(--h3); margin-bottom: clamp(0.15rem, 0.3vw, 0.3rem); }
+.persona-card p { font-size: var(--sm); opacity: 0.6; line-height: 1.5; }
+.market-bottom { display: flex; gap: clamp(1.5rem, 3vw, 4rem); }
+.market-stat { flex: 1; }
+.market-label { font-family: var(--font-b); font-size: var(--xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.4; margin-bottom: clamp(0.1rem, 0.2vw, 0.2rem); }
+.market-value { font-family: var(--font-h); font-size: clamp(0.85rem, 1.3vw, 1.05rem); }
+.proof-row { display: flex; gap: clamp(2rem, 5vw, 6rem); margin-top: clamp(0.8rem, 1.5vh, 1.5rem); padding-top: clamp(0.5rem, 1vh, 1rem); border-top: 1px solid rgba(13,13,13,0.1); }
+.slide--dark .proof-row { border-top-color: rgba(255,255,255,0.1); }
+.proof-big { font-family: var(--font-h); font-size: clamp(1.4rem, 3vw, 2.6rem); line-height: 1.1; }
+.proof-detail { font-size: var(--sm); opacity: 0.6; margin-top: 0.2em; }
+
+/* === REVENUE === */
+.revenue-layers { display: flex; flex-direction: column; gap: clamp(0.5rem, 1vh, 0.8rem); }
+.revenue-layer { display: grid; grid-template-columns: clamp(70px, 10vw, 120px) 1fr; gap: clamp(1rem, 2vw, 2rem); padding: clamp(0.5rem, 1vw, 1rem) 0; border-top: 1px solid rgba(255,255,255,0.1); align-items: start; }
+.slide--light .revenue-layer { border-top-color: rgba(13,13,13,0.1); }
+.revenue-tag { font-family: var(--font-b); font-size: var(--xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 0.15em; }
+.revenue-layer h3 { margin-bottom: clamp(0.1rem, 0.2vw, 0.2rem); }
+.revenue-layer p { font-size: var(--sm); opacity: 0.6; }
+
+/* === TRACTION === */
+.traction-list { display: flex; flex-direction: column; gap: clamp(0.4rem, 0.8vh, 0.7rem); }
+.traction-item { display: grid; grid-template-columns: clamp(24px, 2vw, 32px) 1fr; gap: clamp(0.4rem, 0.8vw, 0.8rem); align-items: baseline; }
+.traction-marker { font-family: var(--font-h); color: var(--green); font-size: clamp(1rem, 1.5vw, 1.3rem); }
+.slide--dark .traction-marker { color: var(--amber); }
+.traction-item p { font-size: var(--body); }
+.traction-item strong { font-weight: 600; }
+
+/* === COMPETITIVE === */
+.comp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.8rem, 1.5vw, 1.5rem); }
+.comp-card { padding-top: clamp(0.4rem, 0.8vw, 0.6rem); border-top: 1px solid rgba(255,255,255,0.12); }
+.slide--light .comp-card { border-top-color: rgba(13,13,13,0.12); }
+.comp-card h3 { font-family: var(--font-b); font-weight: 600; font-size: clamp(0.7rem, 1vw, 0.9rem); margin-bottom: 0.15em; }
+.comp-does { font-size: var(--sm); opacity: 0.5; }
+.comp-lacks { font-size: var(--sm); color: var(--amber); font-weight: 500; margin-top: 0.15em; }
+.moat-row { display: flex; gap: clamp(1.5rem, 3vw, 4rem); padding-top: clamp(0.4rem, 0.8vh, 0.8rem); border-top: 1px solid rgba(255,255,255,0.12); }
+.slide--light .moat-row { border-top-color: rgba(13,13,13,0.12); }
+.moat-item h3 { font-family: var(--font-b); font-weight: 600; font-size: clamp(0.7rem, 1vw, 0.9rem); margin-bottom: 0.1em; }
+.moat-item p { font-size: var(--sm); opacity: 0.5; }
+
+/* === GTM === */
+.phases { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(1.5rem, 3vw, 4rem); }
+.phase { border-top: 2px solid var(--amber); padding-top: clamp(0.4rem, 0.8vw, 0.8rem); }
+.slide--light .phase { border-top-color: var(--dark); }
+.phase-label { font-family: var(--font-b); font-size: var(--xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); margin-bottom: clamp(0.2rem, 0.4vw, 0.4rem); }
+.slide--light .phase-label { color: var(--dark); opacity: 0.5; }
+.phase h3 { margin-bottom: clamp(0.15rem, 0.3vw, 0.3rem); }
+.phase p { font-size: var(--sm); opacity: 0.6; }
+
+/* === PROGRESS === */
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--amber); z-index: 100; transition: width 0.3s ease; }
+.slide-counter { position: fixed; bottom: clamp(1rem, 2vh, 2rem); right: var(--slide-pad); font-family: var(--font-b); font-size: var(--sm); z-index: 100; pointer-events: none; transition: color 0.3s ease; }
+.slide-counter.on-dark { color: rgba(250,250,250,0.3); }
+.slide-counter.on-light { color: rgba(13,13,13,0.3); }
+
+/* === REVEAL === */
+.reveal { opacity: 0; transform: translateY(clamp(8px, 1.5vh, 16px)); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.rd1 { transition-delay: 0.08s; }
+.rd2 { transition-delay: 0.16s; }
+.rd3 { transition-delay: 0.24s; }
+.rd4 { transition-delay: 0.32s; }
+.rd5 { transition-delay: 0.40s; }
+
+/* === RESPONSIVE === */
+@media (max-height: 700px) {
+    :root { --slide-pad: clamp(1rem, 4vw, 3rem); --title: clamp(1.4rem, 4vw, 2.8rem); --h2: clamp(1.1rem, 2.5vw, 1.8rem); }
+    .cover-logo-wrap img { height: clamp(120px, 25vh, 250px); }
+}
+@media (max-height: 600px) {
+    :root { --slide-pad: clamp(0.75rem, 3vw, 2rem); --title: clamp(1.2rem, 3.5vw, 2rem); --body: clamp(0.65rem, 1.1vw, 0.9rem); }
+}
+@media (max-width: 768px) {
+    .cover-layout { flex-direction: column; align-items: flex-start; }
+    .cover-logo-wrap img { height: clamp(100px, 20vh, 180px); }
+    .problem-grid, .solution-layout, .how-layout, .comp-grid, .phases, .persona-row { grid-template-columns: 1fr; }
+    .proof-row, .moat-row, .market-bottom { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter on-dark" id="slideCounter">1 / 11</div>
+
+<!-- SLIDE 1: COVER (dark) -->
+<section class="slide slide--dark" data-theme="dark">
+    <div class="slide-content">
+        <div class="cover-layout">
+            <div class="cover-logo-wrap reveal">
+                <img src="assets/Logo_full_Planpin_Black background.png" alt="PlanPin">
+            </div>
+            <div class="cover-text">
+                <h1 class="reveal rd1">Plan your next trip, guided by people who've actually been there</h1>
+                <p class="cover-subtitle reveal rd2">The creator-curated travel planning app</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 2: PROBLEM (light) -->
+<section class="slide slide--light" data-theme="light">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">The Problem</span>
+            <h2 class="reveal rd1">Travel planning is broken, and getting worse</h2>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-item reveal rd1">
+                <h3>Information overload</h3>
+                <p>Too many platforms, too many options, no trusted filter. Hundreds of conflicting listicles for every destination.</p>
+            </div>
+            <div class="problem-item reveal rd2">
+                <h3>Fake reviews</h3>
+                <p>Bot-generated and hotelier-manipulated ratings across TripAdvisor, Google, and Booking.com erode all trust.</p>
+            </div>
+            <div class="problem-item reveal rd3">
+                <h3>Generic AI</h3>
+                <p>ChatGPT and Gemini give the same itinerary to everyone. No taste, no context, no curation.</p>
+            </div>
+            <div class="problem-item reveal rd4">
+                <h3>Fragmented workflow</h3>
+                <p>Inspiration on Instagram, planning on Google Docs, booking on five different tabs. No connective tissue.</p>
+            </div>
+        </div>
+        <p class="reveal rd5" style="font-family: var(--font-h); font-style: italic; font-size: var(--body); opacity: 0.5;">The result: decision paralysis. Most trips are over-planned or badly planned.</p>
+    </div>
+</section>
+
+<!-- SLIDE 3: SOLUTION (dark) -->
+<section class="slide slide--dark" data-theme="dark">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">The Solution</span>
+            <h2 class="reveal rd1"><span class="c-p">Creator-curated</span> recommendations + <span class="c-a">AI-powered</span> itineraries</h2>
+        </div>
+        <div class="solution-layout reveal rd2">
+            <div class="pillar">
+                <div class="pillar-num c-p">1</div>
+                <h3>A trusted creator layer</h3>
+                <p>Hyper-niche specialists who've actually been to 50 hotels in the Maldives. Not bots, not algorithms.</p>
+            </div>
+            <div class="pillar">
+                <div class="pillar-num c-a">2</div>
+                <h3>An AI planning engine</h3>
+                <p>Organises creator inputs into personalised itineraries. Not generic LLM output, curated data only.</p>
+            </div>
+        </div>
+        <p class="principle reveal rd3" style="border-top-color: rgba(255,255,255,0.12);">"Trust before scale. Curation before generation."</p>
+    </div>
+</section>
+
+<!-- SLIDE 4: THE AI PHILOSOPHY / DATA MOAT (light) -->
+<section class="slide slide--light" data-theme="light">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">The AI Philosophy</span>
+            <h2 class="reveal rd1">AI is a tool, not the core</h2>
+        </div>
+        <div class="insight-list">
+            <p class="insight-item reveal rd1">The AI takes creator-curated spots as its <strong>only input database</strong>, not the open internet</p>
+            <p class="insight-item reveal rd2">It does not pull from TripAdvisor, Google, or generic web sources</p>
+            <p class="insight-item reveal rd3">Every recommendation has a trusted human behind it. The AI organises human curation, it doesn't replace it</p>
+            <p class="insight-item reveal rd4">More creator content → better recommendation DB → better AI → more users → more creators want to join. The moat compounds over time</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 5: HOW IT WORKS (dark) — interactive steps -->
+<section class="slide slide--dark" data-theme="dark" id="howSlide">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label">How It Works</span>
+            <h2>Four steps to a personalised trip</h2>
+        </div>
+        <div class="how-layout">
+            <div class="steps" id="howSteps">
+                <div class="step how-step is-active" data-step="0">
+                    <div class="step-label">Step 01</div>
+                    <h3>Save</h3>
+                    <p>See a travel reel on Instagram or TikTok? Share it to PlanPin and spots are automatically saved to your trip board.</p>
+                </div>
+                <div class="step how-step" data-step="1">
+                    <div class="step-label">Step 02</div>
+                    <h3>Discover</h3>
+                    <p>Browse creator collections by theme or destination. Each creator is a hyper-niche specialist with verified recommendations.</p>
+                </div>
+                <div class="step how-step" data-step="2">
+                    <div class="step-label">Step 03</div>
+                    <h3>Plan</h3>
+                    <p>AI builds a day-by-day itinerary using only creator-curated spots, with inline attribution: "recommended by [Creator]."</p>
+                </div>
+                <div class="step how-step" data-step="3">
+                    <div class="step-label">Step 04</div>
+                    <h3>Book</h3>
+                    <p>One-click booking for hotels, restaurants, and experiences via Booking.com and Hotels.com affiliate integration.</p>
+                </div>
+            </div>
+            <div class="how-screenshot-wrap">
+                <div class="how-img iphone-mockup-wrap is-visible" data-step="0">
+                    <div class="iphone-frame">
+                        <div class="iphone-screen">
+                            <div class="iphone-notch"></div>
+                            <video class="iphone-video" loop muted playsinline preload="auto">
+                                <source src="assets/save to plan pin.mov" type="video/quicktime">
+                                <source src="assets/save to plan pin.mov" type="video/mp4">
+                            </video>
+                            <div class="iphone-home-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <video class="how-screenshot how-img how-video" data-step="1" loop muted playsinline preload="auto">
+                    <source src="assets/creator profile .mp4" type="video/mp4">
+                </video>
+                <video class="how-screenshot how-img how-video" data-step="2" loop muted playsinline preload="auto">
+                    <source src="assets/Ai Chat demo.mp4" type="video/mp4">
+                </video>
+                <div class="how-img partner-logos-wrap" data-step="3">
+                    <div class="partner-logos-label">Potential booking partners</div>
+                    <div class="partner-logos-grid">
+                        <img src="assets/Booking.com_logo.svg.png" alt="Booking.com" class="logo-invert">
+                        <img src="assets/hotels_com_red.png" alt="Hotels.com" class="logo-invert">
+                        <img src="assets/expedia_white_trimmed.png" alt="Expedia" style="height: clamp(36px, 5vh, 60px);">
+                        <img src="assets/viator222.png" alt="Viator" class="logo-invert">
+                        <img src="assets/g adventures.png" alt="G Adventures" class="logo-invert">
+                        <img src="assets/Skyscanner_Logo_LockupHorizontal_SkyBlue_RGB.svg.png" alt="Skyscanner" class="logo-invert">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 6: WHO IT'S FOR (light) -->
+<section class="slide slide--light" data-theme="light">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">Who It's For</span>
+            <h2 class="reveal rd1">Three personas, one underserved demographic</h2>
+        </div>
+
+        <div class="persona-row reveal rd2">
+            <div class="persona-card">
+                <h3 class="c-a">The Frequent Traveler</h3>
+                <p>Age 35–50. High income. 5–10 trips/year. Needs trusted, authentic recommendations and seamless end-to-end booking.</p>
+            </div>
+            <div class="persona-card">
+                <h3 class="c-g">The Solo Female Traveler</h3>
+                <p>Age 25–40. Mid-to-high income. Safety-conscious, values community-driven travel and creator-led verified recommendations.</p>
+            </div>
+            <div class="persona-card">
+                <h3 class="c-p">The Group/Couple Planner</h3>
+                <p>Age 25–45. Plans collaboratively. Needs shared trip boards, a single source of truth, and a way to unify group inspiration.</p>
+            </div>
+        </div>
+
+        <p class="reveal rd3" style="font-family: var(--font-h); font-size: var(--body); border-top: 1px solid rgba(13,13,13,0.1); padding-top: clamp(0.4rem, 0.8vh, 0.8rem);">Across all three personas, <strong>women drive trip research, planning, and sharing</strong>. Post-trip sharing also skews heavily female, making it the strongest untapped retention and virality mechanic in travel.</p>
+    </div>
+</section>
+
+<!-- SLIDE 7: MARKET SIZING (dark) -->
+<section class="slide slide--dark" data-theme="dark">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">Market Opportunity</span>
+            <h2 class="reveal rd1">A $623B market with no dominant planning layer</h2>
+        </div>
+
+        <div class="market-bottom reveal rd2">
+            <div class="market-stat">
+                <div class="market-label">Online Travel Market (2025)</div>
+                <div class="market-value">$623B globally</div>
+            </div>
+            <div class="market-stat">
+                <div class="market-label">Travel Planning Apps</div>
+                <div class="market-value">$14.5B, growing 11.9% CAGR</div>
+            </div>
+            <div class="market-stat">
+                <div class="market-label">Phase 1 Geography</div>
+                <div class="market-value">US + Europe</div>
+            </div>
+        </div>
+
+        <div class="proof-row reveal rd3">
+            <div>
+                <div class="proof-big"><span class="c-a">$35M</span> revenue</div>
+                <p class="proof-detail">Wonderlog: 21M downloads, $1M/month run rate</p>
+            </div>
+            <div>
+                <div class="proof-big"><span class="c-a">$200K</span>/month</div>
+                <p class="proof-detail">Roamy: launched Oct 2024, single-feature MVP, $700K total</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 8: BUSINESS MODEL (light) -->
+<section class="slide slide--light" data-theme="light">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">Business Model</span>
+            <h2 class="reveal rd1">Three revenue layers, stacked over time</h2>
+        </div>
+        <div class="revenue-layers">
+            <div class="revenue-layer reveal rd2">
+                <div class="revenue-tag c-a">Primary</div>
+                <div>
+                    <h3>Subscription + Credits</h3>
+                    <p>$49.99–$59.99/year. Credit-based free tier lets users see value before paywall. Push annual plans to reduce churn.</p>
+                </div>
+            </div>
+            <div class="revenue-layer reveal rd3">
+                <div class="revenue-tag c-g">Secondary</div>
+                <div>
+                    <h3>Affiliate Commissions</h3>
+                    <p>Hotel and experience bookings via Booking.com, Hotels.com, OpenTable. Every completed itinerary is a direct booking funnel.</p>
+                </div>
+            </div>
+            <div class="revenue-layer reveal rd4">
+                <div class="revenue-tag c-p">Future</div>
+                <div>
+                    <h3>Premium Experiences</h3>
+                    <p>Creator-led trips and wellness retreats. Featured products and curated collections. B2B hotel chain partnerships.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 9: TRACTION (dark) -->
+<section class="slide slide--dark" data-theme="dark">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">Traction & Validation</span>
+            <h2 class="reveal rd1">Distribution is already built.</h2>
+        </div>
+        <div class="traction-list">
+            <div class="traction-item reveal rd1">
+                <span class="traction-marker">→</span>
+                <p><strong>300–500 creator relationships</strong> (WhatsApp-level) + database of 10K travel creators with engagement data</p>
+            </div>
+            <div class="traction-item reveal rd2">
+                <span class="traction-marker">→</span>
+                <p><strong>Simon Squibb</strong> (5M+ YouTube subscribers), Affinity Labs investor, potential PlanPin marketing collaborator</p>
+            </div>
+            <div class="traction-item reveal rd3">
+                <span class="traction-marker">→</span>
+                <p><strong>Automated creator pipeline:</strong> Scrape Instagram/TikTok → transcribe via ElevenLabs → auto-populate creator profiles → DM to claim</p>
+            </div>
+            <div class="traction-item reveal rd4">
+                <span class="traction-marker">→</span>
+                <p><strong>planpins.com</strong> domain secured. Waitlist landing page launching April 2026.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 10: COMPETITIVE (light) -->
+<section class="slide slide--light" data-theme="light">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">Competitive Landscape</span>
+            <h2 class="reveal rd1">The gap between curation and AI hasn't been filled</h2>
+        </div>
+        <div class="comp-grid reveal rd2">
+            <div class="comp-card">
+                <h3>Wanderlog</h3>
+                <p class="comp-does">Trip organisation tool</p>
+                <p class="comp-lacks">No creator layer. Generic.</p>
+            </div>
+            <div class="comp-card">
+                <h3>Roamy</h3>
+                <p class="comp-does">Social import → itinerary</p>
+                <p class="comp-lacks">No curation. No booking.</p>
+            </div>
+            <div class="comp-card">
+                <h3>MindTrip</h3>
+                <p class="comp-does">AI-native planning</p>
+                <p class="comp-lacks">Heavy API dependency. No trust layer.</p>
+            </div>
+            <div class="comp-card">
+                <h3>ChatGPT / Gemini</h3>
+                <p class="comp-does">Generic AI itineraries</p>
+                <p class="comp-lacks">No taste. No trust. No booking.</p>
+            </div>
+        </div>
+        <div>
+            <span class="label reveal rd3" style="margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem); display: block;">PlanPin's Moat</span>
+            <div class="moat-row reveal rd3">
+                <div class="moat-item" style="flex:1;">
+                    <h3>Creator trust layer</h3>
+                    <p>Not replicable without the network Max has built over years</p>
+                </div>
+                <div class="moat-item" style="flex:1;">
+                    <h3>Data flywheel</h3>
+                    <p>Every saved reel enriches the recommendation DB → better AI → more users</p>
+                </div>
+                <div class="moat-item" style="flex:1;">
+                    <h3>Built-in audience</h3>
+                    <p>1M+ followers, 60% female, 35–44 core segment</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 11: GTM (dark) -->
+<section class="slide slide--dark" data-theme="dark">
+    <div class="slide-content flex-col gap-lg">
+        <div class="flex-col gap-xs">
+            <span class="label reveal">Go-to-Market</span>
+            <h2 class="reveal rd1">Creator-led growth with a live distribution asset</h2>
+        </div>
+        <div class="phases">
+            <div class="phase reveal rd2">
+                <div class="phase-label">Phase 1: Seed</div>
+                <h3>Creator network</h3>
+                <p>Max's top 100 contacts onboarded first. Social proof before cold outreach to 10K database. Invite-only: 5–10 → 100 → open.</p>
+            </div>
+            <div class="phase reveal rd3">
+                <div class="phase-label">Phase 2: Viral</div>
+                <h3>Content engine</h3>
+                <p>In-video CTAs embedded in regular content (not dedicated posts). Bio link compounds when posts go viral. Max's YouTube launching April 2026.</p>
+            </div>
+            <div class="phase reveal rd4">
+                <div class="phase-label">Phase 3: Amplify</div>
+                <h3>Conference circuit</h3>
+                <p>CIS (early June). VidCon Middle East (end June, ~1B reach). Arabian Travel Market Dubai (August 2026).</p>
+            </div>
+        </div>
+        <p class="reveal rd5" style="font-size: var(--sm); opacity: 0.4; font-style: italic; padding-top: clamp(0.4rem, 0.8vh, 0.8rem); border-top: 1px solid rgba(13,13,13,0.08);">Creator incentives: Affiliate commission first → top performers convert to ~1% equity. Milestone-gated: 10K users referred, 1 post/month minimum.</p>
+    </div>
+</section>
+
+<script>
+(function() {
+    'use strict';
+    const slides = document.querySelectorAll('.slide');
+    const bar = document.getElementById('progressBar');
+    const counter = document.getElementById('slideCounter');
+    const total = slides.length;
+    let cur = 0, busy = false;
+
+    /* Reveal animations */
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* --- How It Works: interactive steps --- */
+    const howSlide = document.getElementById('howSlide');
+    const howSlideIndex = Array.from(slides).indexOf(howSlide);
+    const howSteps = howSlide.querySelectorAll('.how-step');
+    const howImgs = howSlide.querySelectorAll('.how-img');
+    let activeStep = 0;
+    const totalSteps = howSteps.length;
+
+    /* Collect all videos in the how slide */
+    const howVideos = howSlide.querySelectorAll('video');
+    let howSlideVisible = false;
+
+    function pauseAllHowVideos() {
+        howVideos.forEach(v => v.pause());
+    }
+
+    function playActiveStepVideo() {
+        pauseAllHowVideos();
+        if (!howSlideVisible) return;
+        const activeImg = howSlide.querySelector('.how-img[data-step="' + activeStep + '"]');
+        if (activeImg) {
+            const vid = activeImg.tagName === 'VIDEO' ? activeImg : activeImg.querySelector('video');
+            if (vid) {
+                vid.currentTime = 0;
+                /* Small delay to let the browser settle the DOM transition before playing */
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        vid.play().catch(() => {});
+                    });
+                });
+            }
+        }
+    }
+
+    function setStep(i) {
+        activeStep = Math.max(0, Math.min(i, totalSteps - 1));
+        howSteps.forEach((s, idx) => s.classList.toggle('is-active', idx === activeStep));
+        howImgs.forEach((img, idx) => img.classList.toggle('is-visible', idx === activeStep));
+        playActiveStepVideo();
+    }
+
+    /* Watch whether the how slide is in viewport */
+    const howSlideObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            howSlideVisible = e.isIntersecting;
+            if (e.isIntersecting) {
+                playActiveStepVideo();
+            } else {
+                pauseAllHowVideos();
+            }
+        });
+    }, { threshold: 0.5 });
+    howSlideObs.observe(howSlide);
+
+    /* Click on a step to select it */
+    howSteps.forEach((s, idx) => {
+        s.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setStep(idx);
+        });
+    });
+
+    /* Start with all videos paused */
+    pauseAllHowVideos();
+
+    /* --- Slide navigation --- */
+    function ui() {
+        bar.style.width = ((cur + 1) / total * 100) + '%';
+        counter.textContent = (cur + 1) + ' / ' + total;
+        counter.className = 'slide-counter ' + (slides[cur].dataset.theme === 'dark' ? 'on-dark' : 'on-light');
+    }
+    function detect() {
+        cur = Math.round((window.scrollY || document.documentElement.scrollTop) / window.innerHeight);
+        cur = Math.max(0, Math.min(cur, total - 1));
+        ui();
+    }
+    function go(i) {
+        if (i < 0 || i >= total || busy) return;
+        busy = true; cur = i;
+        /* Reset steps when entering the how slide */
+        if (i === howSlideIndex) setStep(0);
+        slides[i].scrollIntoView({ behavior: 'smooth' });
+        ui(); setTimeout(() => busy = false, 600);
+    }
+
+    /* Forward/back with sub-step support on the How slide */
+    function forward() {
+        if (cur === howSlideIndex && activeStep < totalSteps - 1) {
+            setStep(activeStep + 1);
+        } else {
+            go(cur + 1);
+        }
+    }
+    function backward() {
+        if (cur === howSlideIndex && activeStep > 0) {
+            setStep(activeStep - 1);
+        } else {
+            go(cur - 1);
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        const k = e.key;
+        if (k === 'ArrowDown' || k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); forward(); }
+        else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); backward(); }
+        else if (k === 'Home') { e.preventDefault(); go(0); }
+        else if (k === 'End') { e.preventDefault(); go(total - 1); }
+        else if (k === 'f' || k === 'F') { e.preventDefault(); document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen().catch(()=>{}); }
+    });
+
+    let st; window.addEventListener('scroll', () => { clearTimeout(st); st = setTimeout(detect, 80); }, { passive: true });
+    let ty = 0, tx = 0;
+    document.addEventListener('touchstart', e => { ty = e.touches[0].clientY; tx = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', e => { const dy = ty - e.changedTouches[0].clientY, dx = tx - e.changedTouches[0].clientX; if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) { dy > 0 ? forward() : backward(); } }, { passive: true });
+    document.addEventListener('click', e => {
+        if (e.target.closest('a,button,input,.how-step')) return;
+        const x = e.clientX, w = window.innerWidth;
+        if (x > w * 0.65) forward();
+        else if (x < w * 0.35) backward();
+    });
+
+    detect(); ui();
+})();
+</script>
+</body>
+</html>
