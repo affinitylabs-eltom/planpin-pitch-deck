@@ -9,6 +9,62 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+/* === PASSWORD GATE === */
+#passwordGate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0D0D0D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+}
+#passwordGate.hidden { display: none; }
+#passwordGate img { height: 64px; width: auto; margin-bottom: 0.5rem; }
+#passwordGate form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+#passwordGate input {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 0.7rem 1.2rem;
+    color: #FAFAFA;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    width: 260px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+#passwordGate input:focus { border-color: #FFC752; }
+#passwordGate input::placeholder { color: rgba(255,255,255,0.3); }
+#passwordGate button {
+    background: #FFC752;
+    color: #0D0D0D;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 2.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+#passwordGate button:hover { opacity: 0.85; }
+#passwordGate .pw-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    height: 1.2em;
+}
+#deckContent { display: none; }
+#deckContent.unlocked { display: contents; }
 @font-face {
     font-family: 'Karrik';
     src: url('assets/fonts/Karrik-Regular.woff2') format('woff2'),
@@ -395,6 +451,17 @@ p, li { font-family: var(--font-b); font-size: var(--body); line-height: 1.6; ma
 </head>
 <body>
 
+<!-- Password Gate -->
+<div id="passwordGate">
+    <img src="assets/Logo_full_Planpin_Black background.png" alt="PlanPin">
+    <form id="pwForm">
+        <input type="password" id="pwInput" placeholder="Enter password" autocomplete="off" autofocus>
+        <button type="submit">Enter</button>
+        <div class="pw-error" id="pwError"></div>
+    </form>
+</div>
+
+<div id="deckContent">
 <div class="progress-bar" id="progressBar"></div>
 <div class="slide-counter on-dark" id="slideCounter">1 / 11</div>
 
@@ -746,6 +813,45 @@ p, li { font-family: var(--font-b); font-size: var(--body); line-height: 1.6; ma
         <p class="reveal rd5" style="font-size: var(--sm); opacity: 0.4; font-style: italic; padding-top: clamp(0.4rem, 0.8vh, 0.8rem); border-top: 1px solid rgba(13,13,13,0.08);">Creator incentives: Affiliate commission first → top performers convert to ~1% equity. Milestone-gated: 10K users referred, 1 post/month minimum.</p>
     </div>
 </section>
+
+</div><!-- /deckContent -->
+
+<script>
+/* Password gate */
+(function() {
+    const HASH = '5a7d4c8e'; /* simple hash of affinitylabs2026 */
+    function simpleHash(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) { h = ((h << 5) - h + s.charCodeAt(i)) | 0; }
+        return (h >>> 0).toString(16);
+    }
+    const gate = document.getElementById('passwordGate');
+    const deck = document.getElementById('deckContent');
+    const form = document.getElementById('pwForm');
+    const input = document.getElementById('pwInput');
+    const error = document.getElementById('pwError');
+
+    /* Check if already unlocked this session */
+    if (sessionStorage.getItem('pp_unlocked') === '1') {
+        gate.classList.add('hidden');
+        deck.classList.add('unlocked');
+    }
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value === 'affinitylabs2026') {
+            sessionStorage.setItem('pp_unlocked', '1');
+            gate.classList.add('hidden');
+            deck.classList.add('unlocked');
+            window.dispatchEvent(new Event('resize'));
+        } else {
+            error.textContent = 'Incorrect password';
+            input.value = '';
+            input.focus();
+        }
+    });
+})();
+</script>
 
 <script>
 (function() {
