@@ -1008,6 +1008,8 @@ p, li { font-family: var(--font-b); font-size: var(--body); line-height: 1.6; ma
     }
 
     document.addEventListener('keydown', e => {
+        /* Ignore all keyboard shortcuts when typing in an input */
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         const k = e.key;
         if (k === 'ArrowDown' || k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); forward(); }
         else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); backward(); }
