@@ -30,21 +30,41 @@
     align-items: center;
     gap: 0.75rem;
 }
+#passwordGate .pw-field {
+    position: relative;
+    width: 260px;
+}
 #passwordGate input {
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: 8px;
-    padding: 0.7rem 1.2rem;
+    padding: 0.7rem 2.5rem 0.7rem 1.2rem;
     color: #FAFAFA;
     font-family: 'Poppins', sans-serif;
     font-size: 0.95rem;
-    width: 260px;
+    width: 100%;
     text-align: center;
     outline: none;
     transition: border-color 0.2s ease;
+    box-sizing: border-box;
 }
 #passwordGate input:focus { border-color: #FFC752; }
 #passwordGate input::placeholder { color: rgba(255,255,255,0.3); }
+#passwordGate .pw-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: rgba(255,255,255,0.35);
+    font-size: 0;
+    line-height: 0;
+    transition: color 0.2s ease;
+}
+#passwordGate .pw-toggle:hover { color: rgba(255,255,255,0.7); }
 #passwordGate button {
     background: #FFC752;
     color: #0D0D0D;
@@ -455,7 +475,15 @@ p, li { font-family: var(--font-b); font-size: var(--body); line-height: 1.6; ma
 <div id="passwordGate">
     <img src="assets/Logo_full_Planpin_Black background.png" alt="PlanPin">
     <form id="pwForm">
-        <input type="password" id="pwInput" placeholder="Enter password" autocomplete="off" autofocus>
+        <div class="pw-field">
+            <input type="password" id="pwInput" placeholder="Enter password" autocomplete="off" autofocus>
+            <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path id="eyeOpen" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle id="eyePupil" cx="12" cy="12" r="3"/>
+                    <line id="eyeSlash" x1="1" y1="1" x2="23" y2="23" style="display:none;"/>
+                </svg>
+            </button>
+        </div>
         <button type="submit">Enter</button>
         <div class="pw-error" id="pwError"></div>
     </form>
@@ -836,6 +864,16 @@ p, li { font-family: var(--font-b); font-size: var(--body); line-height: 1.6; ma
         gate.classList.add('hidden');
         deck.classList.add('unlocked');
     }
+
+    /* Toggle password visibility */
+    var toggle = document.getElementById('pwToggle');
+    var slash = document.getElementById('eyeSlash');
+    toggle.addEventListener('click', function() {
+        var showing = input.type === 'text';
+        input.type = showing ? 'password' : 'text';
+        slash.style.display = showing ? 'none' : 'block';
+        input.focus();
+    });
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
